@@ -129,7 +129,7 @@ export default class TimeView implements ITimeView{
         this.lightButton.addEventListener('click', handler)
     }
 
-    toggleLight(){
+    toggleLight(): void{
         this.isLightOn = !this.isLightOn
         this.timeElement.style.backgroundColor = this.isLightOn ? '#FBE106' : '#FFFFFF'
     }
