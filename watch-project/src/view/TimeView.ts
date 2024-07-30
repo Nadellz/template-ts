@@ -8,7 +8,11 @@ export interface ITimeView{
     modeButton: HTMLButtonElement
     increaseButton: HTMLButtonElement
     lightButton: HTMLButtonElement
+    resetButton: HTMLButtonElement
+    formatButton: HTMLButtonElement
+    closeButton: HTMLButtonElement
     isLightOn: boolean
+    clockContainer: HTMLElement
 
     displayTime(hours: Number, minutes: Number, seconds: Number, editMode: 'none' | 'hours' | 'minutes'): void
     modeOnClick(handler: ()=> void): void
@@ -16,6 +20,8 @@ export interface ITimeView{
     lightOnClick(handler: ()=> void): void
     toggleLight(): void
     pad(num: Number): string
+    resetOnClick(handler: ()=> void): void
+    formatOnClick(handler: ()=> void): void
     
 }
 export default class TimeView implements ITimeView{
@@ -28,6 +34,11 @@ export default class TimeView implements ITimeView{
     increaseButton: HTMLButtonElement
     lightButton: HTMLButtonElement
     isLightOn: boolean = false
+    resetButton: HTMLButtonElement
+    formatButton: HTMLButtonElement
+    closeButton: HTMLButtonElement
+    clockContainer: HTMLElement
+
 
     constructor(){
 
@@ -41,6 +52,10 @@ export default class TimeView implements ITimeView{
 
         //6. append timeElement to the clock element.
 
+
+        //0
+        this.clockContainer = document.createElement("div")
+        this.clockContainer.className = "clock-container"
 
         //1
         this.clockElement = document.createElement("div")
@@ -82,18 +97,37 @@ export default class TimeView implements ITimeView{
         lightLabel.className = "button-label light-label"
         lightLabel.innerHTML = "Light"
 
+        this.resetButton = document.createElement("button")
+        this.resetButton.className = "button reset"
+        const resetLabel = document.createElement("div")
+        resetLabel.className = "button-label reset-label"
+        resetLabel.innerHTML = "Reset"
+
+        this.formatButton = document.createElement("button")
+        this.formatButton.innerHTML = "AM/PM - 24h"
+
+        this.closeButton = document.createElement("button")
+        this.closeButton.innerHTML = "x"
+        this.closeButton.className = "close"
+
         //5 append 
         this.clockElement.appendChild(this.modeButton)
         this.clockElement.appendChild(this.increaseButton)
         this.clockElement.appendChild(this.lightButton)
+        this.clockElement.appendChild(this.resetButton)
+
         this.clockElement.appendChild(modeLabel)
         this.clockElement.appendChild(increaseLabel)
         this.clockElement.appendChild(lightLabel)
-
+        this.clockElement.appendChild(resetLabel)
+  
         //6
         this.clockElement.appendChild(this.timeElement)
+        this.clockContainer.appendChild(this.closeButton)
+        this.clockContainer.appendChild(this.clockElement)
 
-        const app = document.getElementById("app")?.append(this.clockElement)
+
+        const app = document.getElementById("app")?.append(this.clockContainer)
 
     }
 
@@ -136,5 +170,12 @@ export default class TimeView implements ITimeView{
 
     pad(num: number): string{
         return num.toString().padStart(2, '0')
+    }
+
+    resetOnClick(handler: ()=> void): void {
+        this.resetButton.addEventListener('click', handler)
+    }
+    formatOnClick(handler: ()=> void): void {
+        this.formatButton.addEventListener('click', handler)
     }
 }
