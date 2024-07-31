@@ -3,7 +3,7 @@ import {toZonedTime , format } from "date-fns-tz"
 export interface Timing{
     dateTime: Date 
     editMode: 'none' | 'hours' | 'minutes'
-    timeZone: string
+    timezone: string
     format: "AM" | "PM" | "24H"
     getCurrentTime(): {hours: number, minutes:number, seconds: number}
     getEditMode(): void
@@ -19,19 +19,20 @@ export interface Timing{
 export default  class TimeModel implements Timing{
     dateTime: Date
     editMode: 'none' | 'hours' | 'minutes'
-    timeZone: string
+    timezone: string
     format: "AM" | "PM" | "24H"
 
     constructor(
-        dateTime: Date = new Date(),
-        editMode: 'none' | 'hours' | 'minutes' = 'none',
-        timezone: string = 'Europe/Athens',
-        format: "AM" | "PM" | "24H" = "24H"
+        dateTime: Date,
+        editMode: 'none' | 'hours' | 'minutes',
+        timezone: string ,
+        format: "AM" | "PM" | "24H" 
     ) {
         this.dateTime = dateTime
         this.editMode = editMode
-        this.timeZone = timezone
+        this.timezone = timezone
         this.format = format
+        this.resetTime()
     }
 
     getCurrentTime(): {hours: number, minutes:number, seconds: number}{
@@ -53,15 +54,27 @@ export default  class TimeModel implements Timing{
 
     increaseHours(){
         let hours: number = this.dateTime.getHours()
-        hours = (hours + 1) % 24
+        if(this.format == "24H"){
+            hours = (hours + 1) % 24
+        }else{
+            hours = (hours + 1) % 12
+            if(hours == 0){ hours = 12}
+        }
         this.dateTime.setHours(hours)
     }
     increaseMinutes(){
-        let minutes = this.dateTime.getMinutes()
+        let minutes: number = this.dateTime.getMinutes()
         minutes = (minutes + 1) % 60
         if(minutes === 0){
-            console.log("inc hours in minutes")
-            this.dateTime.setHours((this.dateTime.getHours() + 1) % 24)
+
+            if(this.format == "24H"){
+                this.dateTime.setHours((this.dateTime.getHours() + 1) % 24)
+            }else{
+                let hours: number = this.dateTime.getHours()
+                hours = (hours + 1) % 12
+                if(hours == 0){ hours = 12}
+                this.dateTime.setHours(hours)
+            }
         }
         this.dateTime.setMinutes(minutes)
     }
@@ -72,29 +85,45 @@ export default  class TimeModel implements Timing{
 
     
     getTimeZone(){
-        return this.timeZone
+        return this.timezone
     }
     
-    setTimeZone(timeZone: string){
-        this.timeZone = timeZone
+    setTimeZone(timezone: string){
+        this.timezone = timezone
     }
 
     getFormat(){
         return this.format
     }
-  
-    setFormat(format: "AM" | "PM" | "24H"){
-        this.format = format
-    }
 
     resetTime(): void {
         const date = new Date()
 
-        const zonedDate= toZonedTime(date, this.timeZone)
+        const zonedDate= toZonedTime(date, this.timezone)
 
         this.dateTime = zonedDate
+
+        if(this.format !="24H"){
+            this.format24toAMPM()
+        }
     }
 
+    format24toAMPM(): void{
+        let hours: number = this.dateTime.getHours()
+        if(hours == 0){
+            hours = 12 
+            // 24H -> PM
+            this.format = "PM"
+        }else if( hours > 12){
+            hours = hours - 12
+            // 24H -> PM
+            this.format = "PM"
+        }else{
+            // 24H -> AM
+            this.format = "AM"
+        }
+        this.dateTime.setHours(hours)
+    }
 
     nextFormat(): void {
 
@@ -104,18 +133,13 @@ export default  class TimeModel implements Timing{
         {
             this.format="AM"
             // change format 24H to AM/PM
-            let hours: number = this.dateTime.getHours()
-            if(hours == 0){
-                hours = 12
-            }else if( hours > 12){
-                hours = hours - 12
-            }
-            this.dateTime.setHours(hours)
+            this.format24toAMPM()
 
         }
 
-        
     }
+
+   
 
     
 }

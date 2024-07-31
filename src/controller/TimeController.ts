@@ -33,7 +33,7 @@ export default class TimeController implements ITimeController{
     updateTime(): void{
         this.model.tick() 
         const { hours, minutes, seconds } = this.model.getCurrentTime()
-        this.view.displayTime(hours, minutes, seconds, this.model.format , this.model.editMode)
+        this.view.displayTime(hours, minutes, seconds, this.model.format, this.model.timezone, this.model.editMode)
     }
     changeEditMode(): void {
         this.model.nextEditMode()

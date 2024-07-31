@@ -6,6 +6,8 @@ export interface ITimeView{
     minutesElement: HTMLElement
     secondsElement: HTMLElement
     formatElement: HTMLElement
+    timezoneElement: HTMLElement
+
     modeButton: HTMLButtonElement
     increaseButton: HTMLButtonElement
     lightButton: HTMLButtonElement
@@ -15,7 +17,7 @@ export interface ITimeView{
     isLightOn: boolean
     clockContainer: HTMLElement
 
-    displayTime(hours: Number, minutes: Number, seconds: Number,format: "AM" | "PM" | "24H", editMode: 'none' | 'hours' | 'minutes'): void
+    displayTime(hours: Number, minutes: Number, seconds: Number,format: "AM" | "PM" | "24H", timezone: string, editMode: 'none' | 'hours' | 'minutes'): void
     modeOnClick(handler: ()=> void): void
     increaseOnClick(handler: ()=> void): void
     lightOnClick(handler: ()=> void): void
@@ -32,6 +34,8 @@ export default class TimeView implements ITimeView{
     minutesElement: HTMLElement
     secondsElement: HTMLElement
     formatElement: HTMLElement
+    timezoneElement: HTMLElement
+
     modeButton: HTMLButtonElement
     increaseButton: HTMLButtonElement
     lightButton: HTMLButtonElement
@@ -74,6 +78,8 @@ export default class TimeView implements ITimeView{
         this.secondsElement = document.createElement('span')
         this.formatElement = document.createElement('span')
         this.formatElement.className = "format-element"
+        this.timezoneElement = document.createElement('span')
+        this.timezoneElement.className = "timezone-element"
 
         //4 append
         this.timeElement.appendChild(this.hoursElement)
@@ -141,12 +147,14 @@ export default class TimeView implements ITimeView{
 
 
     
-    displayTime(hours: number, minutes: number, seconds: number, format: "AM" | "PM" | "24H", editMode: 'none' | 'hours' | 'minutes'): void
+    displayTime(hours: number, minutes: number, seconds: number, format: "AM" | "PM" | "24H", timezone: string, editMode: 'none' | 'hours' | 'minutes'): void
     {
         this.hoursElement.innerHTML = this.pad(hours)
         this.minutesElement.innerText = this.pad(minutes)
         this.secondsElement.innerHTML = this.pad(seconds)
         this.formatElement.innerHTML = format
+        this.timezoneElement.innerHTML = timezone
+
         console.log("format from view: "+format)
 
         if(editMode == 'hours'){
