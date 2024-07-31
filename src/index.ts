@@ -1,5 +1,11 @@
-import './index.css';
-import { MyClass } from './example-unit';
+import "./index.css"
+import TimeController from "./controller/TimeController"
+import TimeModel from "./model/TimeModel"
+import TimeView from "./view/TimeView"
 
-const a = new MyClass(2);
-console.log('number is', a.get());
+
+document.addEventListener("DOMContentLoaded", () =>{
+  const model = new TimeModel();
+  const view = new TimeView();
+  new TimeController(model, view)
+})

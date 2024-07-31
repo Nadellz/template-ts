@@ -1,3 +1,108 @@
-h1 {
-    color: red;
-}
+#app{
+    font-family: monospace;
+    padding: 40px;
+    display: inline-block;
+    background-color: #FFFFFF;
+  }
+  
+  .blink{
+    color: rgba(0,0,0,0.5)
+  }
+  
+  .clock-element{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #6022A6;
+  border: 3px solid #391167;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  z-index: 100;
+  }
+  
+  .time-element{
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 1.2em;
+  color: black;
+  font-family: Arial, sans-serif;
+  }
+  
+  .button{
+    position: absolute;
+    background-color: #EED05D;
+    border-radius: 5px;
+    border: 2px solid #756525;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    font-size: 0.9em;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .mode{
+  top: -11px;
+  left:50%;
+  transform: translateX(-50%);
+  clip-path: inset(0 0 60% 0);
+  width: 40px;
+  height: 25px;
+  }
+  
+  .light{
+    bottom: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: inset(60% 0 0 0);
+    width: 40px;
+    height: 25px;
+  
+  
+  }
+  
+  .increase{
+    right: -11px;
+    top: 50%;
+    transform: translateY(-50%);
+    clip-path: inset(0 0 0 60%);
+    width: 25px;
+    height: 40px;
+  
+  }
+  
+  .button-label{
+  position : absolute;
+  font-size: 0.8em;
+  font-family: Arial, sans-serif;
+  color: #000;
+  
+  }
+  
+  .mode-label{
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%)
+  }
+  
+  .light-label{
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%)
+  }
+  
+  .increase-label{
+  right: -70px;
+  top: 50%;
+  transform: translateY(-50%)
+  }
