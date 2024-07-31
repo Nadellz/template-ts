@@ -9,12 +9,13 @@ export interface ITimeController {
     changeEditMode(): void
     increaseValue(): void
     toggleLight(): void
+    resetClock(): void
+    formatClock(): void
 }
 
-
-export default class TimeController implements TimeController{
-    private model: TimeModel;
-    private view: TimeView;
+export default class TimeController implements ITimeController{
+    model: TimeModel;
+    view: TimeView;
 
     constructor(model: TimeModel, view: TimeView){
         this.model= model
@@ -23,14 +24,16 @@ export default class TimeController implements TimeController{
         this.view.modeOnClick(()=>this.changeEditMode())
         this.view.increaseOnClick(()=>this.increaseValue())
         this.view.lightOnClick(()=>this.toggleLight())
+        this.view.resetOnClick(()=>this.resetClock())
+        this.view.formatOnClick(()=>this.formatClock())
 
         setInterval(()=> this.updateTime(), 1000)
     }
 
     updateTime(): void{
-        this.model.tick()
+        this.model.tick() 
         const { hours, minutes, seconds } = this.model.getCurrentTime()
-        this.view.displayTime(hours, minutes, seconds, this.model.editMode)
+        this.view.displayTime(hours, minutes, seconds, this.model.format , this.model.editMode)
     }
     changeEditMode(): void {
         this.model.nextEditMode()
@@ -47,5 +50,11 @@ export default class TimeController implements TimeController{
         this.view.toggleLight()
     }
 
+    resetClock(): void{
+        this.model.resetTime()
+    }
 
+    formatClock(): void {
+        this.model.nextFormat()
+    }
 }

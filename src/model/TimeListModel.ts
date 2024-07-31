@@ -15,9 +15,6 @@ export default class FullList implements List{
         this.list = list
     }
 
-    getList(): TimeModel[]{
-        return this.list
-    }
 
     add(clock: TimeModel):void{
         this.list.push(clock)
@@ -27,10 +24,20 @@ export default class FullList implements List{
         this.list = []
     }
 
+    getList(): TimeModel[]{
+        return this.list
+    }
 
-    load(){}
+    getClock(index: number){
+        return this.list[index]
+    }
 
-    save(){}
+    removeClock(index: number){
+        if(index >= 0 && index <=this.list.length){
+            this.list.splice(index,1)
+        }
+    }
+
 
 
 }
