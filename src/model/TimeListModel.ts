@@ -22,7 +22,6 @@ export default class ClockList implements IClockList{
 
     remove(id: string): void {
         this.list.delete(id)
-        console.log("remove clock list model "+id)
     }
 
     getClock(id: string): TimeModel | undefined {

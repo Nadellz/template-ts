@@ -26,7 +26,7 @@
   
   .time-element{
   position: absolute;
-  width: 140px;
+  width: 170px;
   height: 40px;
   background-color: #FFFFFF;
   display: flex;
@@ -148,8 +148,8 @@
     left: 10px;
   }
 
-  .format-element{
+  .format-element, .timezone-element{
     margin-left: .3em;
-    margin-top: .2em;
-    font-size: smaller;
+    margin-top: 1em;
+    font-size: xx-small;
   }

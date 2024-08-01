@@ -5,8 +5,7 @@ export interface Timing{
     editMode: 'none' | 'hours' | 'minutes'
     timezone: string
     format: "AM" | "PM" | "24H"
-    getCurrentTime(): {hours: number, minutes:number, seconds: number}
-    getEditMode(): void
+    getCurrentTime(): {hours: number, minutes:number, seconds: number, timezone: string}
     nextEditMode(): void
     increaseHours(): void
     increaseMinutes(): void
@@ -32,19 +31,25 @@ export default  class TimeModel implements Timing{
         this.editMode = editMode
         this.timezone = timezone
         this.format = format
-        this.resetTime()
+        this.resetTime() // function called to set time according to it's timezone
     }
 
-    getCurrentTime(): {hours: number, minutes:number, seconds: number}{
+    getCurrentTime(): {hours: number, minutes:number, seconds: number, timezone: string}{
+        let tz: string = "local"
+        switch(this.timezone){
+            case "Europe/Paris": tz = this.dateTime.toString().split(" ")[5]; break;
+            case "Africa/Lagos": tz = "UTC+01:00"; break;
+            case "Asia/Kolkata": tz = "UTC+5:30"; break;
+            case "Europe/Athens": tz = "GMT+02:00"; break;
+        }
         return {
             hours: this.dateTime.getHours(),
             minutes: this.dateTime.getMinutes(),
-            seconds: this.dateTime.getSeconds()
+            seconds: this.dateTime.getSeconds(),
+            timezone: this.timezone == "Europe/Paris" ? (tz.length == 8 ? `${tz.slice(0,4)}${tz.slice(4,6)}:${tz.slice(6)}` : tz) : tz
         }
     }
-    getEditMode(): 'none'|'hours'|'minutes'{
-        return this.editMode
-    }
+   
 
     nextEditMode(){
         if(this.editMode=="none"){this.editMode = "hours"}
@@ -83,19 +88,6 @@ export default  class TimeModel implements Timing{
         this.dateTime.setSeconds(this.dateTime.getSeconds() + 1) // updates time even when editing.
     }
 
-    
-    getTimeZone(){
-        return this.timezone
-    }
-    
-    setTimeZone(timezone: string){
-        this.timezone = timezone
-    }
-
-    getFormat(){
-        return this.format
-    }
-
     resetTime(): void {
         const date = new Date()
 
@@ -103,6 +95,7 @@ export default  class TimeModel implements Timing{
 
         this.dateTime = zonedDate
 
+        // if the format was on AM/PM then we shall convert it since Date() here is in 24H format.
         if(this.format !="24H"){
             this.format24toAMPM()
         }

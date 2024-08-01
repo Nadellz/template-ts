@@ -8,7 +8,7 @@ export interface ITimeListController{
     model: TimeListModel
     view: TimeListView
 
-    addClock(): void
+    addClock(timezone: string, format: "AM" | "PM" |"24H"): void
     removeClock(id: string): void
 }
 
@@ -24,17 +24,19 @@ export default class TimeListController implements ITimeListController{
         this.model = model
         this.view = view
 
-        this.view.addOnClick(()=> this.addClock())
+        this.view.addOnClick((timezone: string, format: "AM" | "PM" |"24H")=> this.addClock(timezone, format))
         this.view.removeOnClick((id: string) => this.removeClock(id))
+        this.view.timezoneOnChange()
     }
 
 
-    addClock(timezone: string = "Europe/Paris", format: "AM" | "PM" |"24H" = "24H"): void {
+    addClock(timezone: string, format: "AM" | "PM" |"24H"): void {
         const clockId: string = `clock-${this.clockCounter++}`
-        this.model.add(clockId, timezone, format)
+        this.model.add(clockId, this.view.timeZoneSelected, format)
+        //console.log("added clock: "+this.view.timeZoneSelected)
 
         const timeModel = this.model.getClock(clockId)
-        const clockView = new TimeView(clockId, `${clockId}-mode`, `${clockId}-increase`, `${clockId}-light`, `${clockId}-remove`, `${clockId}-format`)
+        const clockView = new TimeView(clockId)
         const clockController = new TimeController(timeModel, clockView)
         this.clockControllers.set(clockId, clockController)
         this.view.renderClock(clockId,clockView)
@@ -43,10 +45,13 @@ export default class TimeListController implements ITimeListController{
     }
 
     removeClock(id: string): void {
-        console.log("remove clock list controller "+id)
         this.view.removeClock(id) //remove view
         this.model.remove(id) // remove clock from list
         this.clockControllers.delete(id) // remove clock's controller
+    }
+
+    selectTimezone(){
+        
     }
 
 }
