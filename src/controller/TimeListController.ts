@@ -45,6 +45,7 @@ export default class TimeListController implements ITimeListController{
     }
 
     removeClock(id: string): void {
+        console.log("remove from controller"+id)
         this.view.removeClock(id) //remove view
         this.model.remove(id) // remove clock from list
         this.clockControllers.delete(id) // remove clock's controller

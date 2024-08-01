@@ -38,6 +38,10 @@ export default class TimeListView implements TimeListView{
         this.selectTimezone.className = "select-timzone-element"
         this.selectTimezone.id = "select-timzone-element"
 
+        const addContainer = document.createElement("div")
+        addContainer.className = "add-clock-container"
+        addContainer.id = "add-clock-container"
+
         // create options : 
         const option1 = document.createElement("option")
         const option2 = document.createElement("option")
@@ -62,10 +66,12 @@ export default class TimeListView implements TimeListView{
         this.selectTimezone.appendChild(option4)
 
         //4. append container, addButton and select
-        
-        const app = document.getElementById("app")?.append(this.container)
-        this.container.append(this.addButton)
-        this.container.append(this.selectTimezone)
+
+        document.getElementById("app")?.append(addContainer)
+        document.getElementById("app")?.append(this.container)
+       
+        addContainer.append(this.addButton)
+        addContainer.append(this.selectTimezone)
     }
 
     addOnClick(handler: (timezone: string, format: "AM" | "PM" |"24H")=> void): void{
@@ -80,6 +86,8 @@ export default class TimeListView implements TimeListView{
             const target: HTMLElement = event.target as HTMLElement
             if(target.classList.contains("close-button")){
                 const id: string = target.dataset.id
+                console.log(target.dataset)
+                console.log("close button: "+id)
                 if(id) handler(id)
             }
 

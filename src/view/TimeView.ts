@@ -52,7 +52,7 @@ export default class TimeView implements ITimeView{
         //0
         this.clockContainer = document.createElement("div")
         this.clockContainer.className = "clock-container"
-        this.clockContainer.id = `clock-container-${clockId}`
+        this.clockContainer.id = `${clockId}`
 
         //1
         this.clockElement = document.createElement("div")
