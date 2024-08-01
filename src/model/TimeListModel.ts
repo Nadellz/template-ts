@@ -1,43 +1,33 @@
 import TimeModel from "./TimeModel";
 
-export interface List {
-    list : TimeModel[]
-    add(clock: TimeModel): void
-    clear(): void
+export interface IClockList {
+    list : Map<string, TimeModel>
+    add(id:string, timezone: string, format: "AM"|"PM"|"24H"): void
+    remove(id: string): void
+    getClock(id: string): TimeModel | undefined
 }
 
-export default class FullList implements List{
+export default class ClockList implements IClockList{
 
-    static instance: FullList = new FullList()
-    list : TimeModel[]
+    list : Map<string, TimeModel>
 
-    constructor(list : TimeModel[] = []){
-        this.list = list
+    constructor(){
+        this.list = new Map()
     }
 
-
-    add(clock: TimeModel):void{
-        this.list.push(clock)
+    add(id:string, timezone: string, format: "AM"|"PM"|"24H"): void{
+        const clock: TimeModel = new TimeModel(new Date(), "none", timezone, format)
+        this.list.set(id, clock)
     }
 
-    clear(): void{
-        this.list = []
+    remove(id: string): void {
+        this.list.delete(id)
+        console.log("remove clock list model "+id)
     }
 
-    getList(): TimeModel[]{
-        return this.list
+    getClock(id: string): TimeModel | undefined {
+        return this.list.get(id)
     }
-
-    getClock(index: number){
-        return this.list[index]
-    }
-
-    removeClock(index: number){
-        if(index >= 0 && index <=this.list.length){
-            this.list.splice(index,1)
-        }
-    }
-
-
+    
 
 }

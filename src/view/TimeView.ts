@@ -46,7 +46,7 @@ export default class TimeView implements ITimeView{
     clockContainer: HTMLElement
 
 
-    constructor(){
+    constructor(clockId: string, modeButtonId: string, increaseButtonId: string, lightButtonId: string, removeButtonId: string, formatButtonId: string){
 
         //1. create clock element
 
@@ -62,6 +62,7 @@ export default class TimeView implements ITimeView{
         //0
         this.clockContainer = document.createElement("div")
         this.clockContainer.className = "clock-container"
+        this.clockContainer.id = clockId
 
         //1
         this.clockElement = document.createElement("div")
@@ -74,10 +75,17 @@ export default class TimeView implements ITimeView{
 
         //4 create 
         this.hoursElement = document.createElement('span')
+        this.hoursElement.className = "hours-element"
+
         this.minutesElement = document.createElement('span')
+        this.minutesElement.className = "minutes-element"
+
         this.secondsElement = document.createElement('span')
+        this.secondsElement.className = "seconds-element"
+
         this.formatElement = document.createElement('span')
         this.formatElement.className = "format-element"
+
         this.timezoneElement = document.createElement('span')
         this.timezoneElement.className = "timezone-element"
 
@@ -120,7 +128,7 @@ export default class TimeView implements ITimeView{
 
         this.closeButton = document.createElement("button")
         this.closeButton.innerHTML = "x"
-        this.closeButton.className = "close"
+        this.closeButton.className = "close-button close"
 
         //5 append 
         this.clockElement.appendChild(this.modeButton)
@@ -155,7 +163,6 @@ export default class TimeView implements ITimeView{
         this.formatElement.innerHTML = format
         this.timezoneElement.innerHTML = timezone
 
-        console.log("format from view: "+format)
 
         if(editMode == 'hours'){
             this.hoursElement.classList.toggle("blink")
@@ -195,5 +202,9 @@ export default class TimeView implements ITimeView{
     }
     formatOnClick(handler: ()=> void): void {
         this.formatButton.addEventListener('click', handler)
+    }
+
+    closeOnClick(handler: ()=> void): void{
+        this.closeButton.addEventListener('click', handler)
     }
 }
