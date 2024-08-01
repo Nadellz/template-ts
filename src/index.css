@@ -55,10 +55,11 @@
     z-index: 2;
   }
   
+  /* Buttons : mode, light, increase, reset, format*/
   .mode{
   top: -11px;
   left:50%;
-  transform: translateX(-50%);
+  transform: translateX(143%) translateY(150%) rotate(49deg);
   clip-path: inset(0 0 60% 0);
   width: 40px;
   height: 25px;
@@ -67,18 +68,16 @@
   .light{
     bottom: -11px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-220%) translateY(-105%) rotate(43deg);
     clip-path: inset(60% 0 0 0);
     width: 40px;
     height: 25px;
-  
-  
   }
   
   .increase{
     right: -11px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateX(-127%) translateY(130%) rotate(49deg);
     clip-path: inset(0 0 0 60%);
     width: 25px;
     height: 40px;
@@ -87,7 +86,7 @@
   .reset{
     left: -11px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateX(93%) translateY(-210%) rotate(41deg);
     clip-path: inset(0 60% 0 0);
     width: 25px;
     height: 40px;
@@ -95,6 +94,23 @@
     border: 2px solid #186447;
   }
   
+  .close{
+    cursor: pointer;
+    position : absolute;
+    margin: 0px;
+    top : 10px;
+    right: 10px;
+  }
+
+  .format{
+    cursor: pointer;
+    position : absolute;
+    margin: 0px;
+    top : 10px;
+    left: 10px;
+    background-color: #16A970;
+    border: 2px solid #186447;
+  }
   
   .button-label{
   position : absolute;
@@ -135,21 +151,7 @@
     border: 1px solid black
   }
   
-  .close{
-    cursor: pointer;
-    position : absolute;
-    margin: 0px;
-    top : 10px;
-    right: 10px;
-  }
-
-  .format{
-    cursor: pointer;
-    position : absolute;
-    margin: 0px;
-    top : 10px;
-    left: 10px;
-  }
+ 
 
   .format-element, .timezone-element{
     margin-left: .3em;

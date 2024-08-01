@@ -113,7 +113,7 @@ export default class TimeView implements ITimeView{
 
         this.formatButton = document.createElement("button")
         this.formatButton.innerHTML = "AM/PM - 24h"
-        this.formatButton.className = "format"
+        this.formatButton.className = "button format"
         this.formatButton.id = `format-button-${clockId}`
 
         this.closeButton = document.createElement("button")
