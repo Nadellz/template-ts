@@ -112,7 +112,6 @@ export default class TimeView implements ITimeView{
         this.resetButton.id = `reset-button-${clockId}`
 
         this.formatButton = document.createElement("button")
-        this.formatButton.innerHTML = "AM/PM - 24h"
         this.formatButton.className = "button format"
         this.formatButton.id = `format-button-${clockId}`
 
@@ -141,22 +140,29 @@ export default class TimeView implements ITimeView{
         resetLabel.innerHTML = "Reset"
         resetLabel.id = `reset-label-${clockId}`
 
+        const formatLabel = document.createElement("div")
+        formatLabel.className = "button-label format-label"
+        formatLabel.innerHTML = "AM/PM - 24H"
+        formatLabel.id = `format-label-${clockId}`
+
         //5 append 
         this.clockElement.appendChild(this.modeButton)
         this.clockElement.appendChild(this.increaseButton)
         this.clockElement.appendChild(this.lightButton)
         this.clockElement.appendChild(this.resetButton)
+        this.clockElement.appendChild(this.formatButton)
 
         this.clockElement.appendChild(modeLabel)
         this.clockElement.appendChild(increaseLabel)
         this.clockElement.appendChild(lightLabel)
         this.clockElement.appendChild(resetLabel)
+        this.clockElement.appendChild(formatLabel)
   
         //6
         this.clockElement.appendChild(this.timeElement)
 
         this.clockContainer.appendChild(this.closeButton)
-        this.clockContainer.appendChild(this.formatButton)
+        
         this.clockContainer.appendChild(this.clockElement)
 
 

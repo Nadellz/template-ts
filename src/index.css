@@ -59,7 +59,7 @@
   .mode{
   top: -11px;
   left:50%;
-  transform: translateX(143%) translateY(150%) rotate(49deg);
+  transform: translateX(127%) translateY(120%) rotate(45deg);
   clip-path: inset(0 0 60% 0);
   width: 40px;
   height: 25px;
@@ -106,8 +106,12 @@
     cursor: pointer;
     position : absolute;
     margin: 0px;
-    top : 10px;
-    left: 10px;
+    right: -11px;
+    top: 50%;
+    transform: translateY(-40%) rotate(1deg);
+    clip-path: inset(0 0 0 60%);
+    width: 25px;
+    height: 40px;
     background-color: #16A970;
     border: 2px solid #186447;
   }
@@ -121,37 +125,42 @@
   }
   
   .mode-label{
-    top: -40px;
-    left: 50%;
-    transform: translateX(-50%)
+    top: 5px;
+    left: 90%;
   }
   
   .light-label{
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%)
+    bottom: 5px;
+    right: 90%;
+
   }
   
   .increase-label{
-  right: -70px;
-  top: 50%;
-  transform: translateY(-50%)
+    bottom: 5px;
+    left: 90%;
+ 
   }
   
   .reset-label {
-    left: -70px;
-    top: 50%;
-    transform: translateY(-50%)
+    top: 5px;
+    right: 90%;
+  }
+
+  .format-label {
+    top: 48%;
+    left: 110%;
+    white-space: nowrap;
   }
   
   .clock-container{
     display: inline-block;
     position: relative;
-    padding: 80px;
-    border: 1px solid black
+    padding: 50px;
+    border: 1px solid black;
+    border-radius: 5% 5% 5% 5%;
+    width: 280px;
   }
   
- 
 
   .format-element, .timezone-element{
     margin-left: .3em;
@@ -167,4 +176,12 @@
     gap: 10px;
     justify-content: center;
     margin: 1em;
+  }
+
+  .add-clock-container{
+    display: flex;
+    flex-direction: row;
+    padding: .5em;
+    width: 225px;
+    justify-content: space-between;
   }

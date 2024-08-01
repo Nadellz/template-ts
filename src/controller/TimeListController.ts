@@ -33,7 +33,6 @@ export default class TimeListController implements ITimeListController{
     addClock(timezone: string, format: "AM" | "PM" |"24H"): void {
         const clockId: string = `clock-${this.clockCounter++}`
         this.model.add(clockId, this.view.timeZoneSelected, format)
-        //console.log("added clock: "+this.view.timeZoneSelected)
 
         const timeModel = this.model.getClock(clockId)
         const clockView = new TimeView(clockId)
