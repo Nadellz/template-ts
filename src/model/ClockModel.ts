@@ -40,7 +40,7 @@ export default  class ClockModel implements IClockModel{
             case "Europe/Paris": tz = this.dateTime.toString().split(" ")[5]; break;
             case "Africa/Lagos": tz = "UTC+01:00"; break;
             case "Asia/Kolkata": tz = "UTC+5:30"; break;
-            case "Europe/Athens": tz = "GMT+02:00"; break;
+            case "Europe/Athens": tz = "GMT+03:00"; break;
         }
         return {
             hours: this.dateTime.getHours(),
@@ -95,8 +95,8 @@ export default  class ClockModel implements IClockModel{
 
         this.dateTime = zonedDate
 
-        // if the format was on AM/PM then we shall convert it since Date() here is in 24H format.
-        if(this.format !="24H"){
+        // If the clock's format is in AM/PM, we need to convert zonedDate, since it is in 24H format (Date()).
+        if(this.format =="AM" || this.format=="PM"){
             this.format24toAMPM()
         }
     }
@@ -117,14 +117,28 @@ export default  class ClockModel implements IClockModel{
         }
         this.dateTime.setHours(hours)
     }
+    
+    formatPMto24(): void{
+        //PM -> 24H
+        let hours: number = this.dateTime.getHours()
+        hours = hours + 12
+        this.dateTime.setHours(hours)
+    }
 
     nextFormat(): void {
 
-        if(this.format=="AM"){this.format = "PM"}
-        else if(this.format=="PM"){this.format = "24H"}
-        else if(this.format=="24H")
-        {
-            this.format="AM"
+        if (this.format == "AM") 
+            {   
+                this.format = "PM"  
+                //no need for conversion : AM to 24H
+            }
+        else if (this.format == "PM") {
+            this.format = "24H"
+            //change format PM to 24H
+            this.formatPMto24()
+        }
+        else if (this.format == "24H") {
+            this.format = "AM"
             // change format 24H to AM/PM
             this.format24toAMPM()
 

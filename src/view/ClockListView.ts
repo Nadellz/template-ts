@@ -58,7 +58,7 @@ export default class ClockListView implements IClockListView{
         option3.innerHTML="UTC+5:30"
 
         option4.value="Europe/Athens"
-        option4.innerHTML="GMT+02:00"
+        option4.innerHTML="GMT+03:00"
 
         this.selectTimezone.appendChild(option1)
         this.selectTimezone.appendChild(option2)
