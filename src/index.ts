@@ -6,8 +6,7 @@ import ClockListView from "./view/ClockListView"
 
 
 document.addEventListener("DOMContentLoaded", () =>{
-
-  const model = new TimeListModel();
-  const view = new ClockListView();
-  new ClockListController(model, view)
+  const model = new TimeListModel(); //1. create watch list's model
+  const view = new ClockListView(); //2. create watch list's view
+  new ClockListController(model, view) //3. create watch list's controller
 })

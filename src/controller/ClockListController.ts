@@ -3,6 +3,14 @@ import ClockListView from "../view/ClockListView"
 import ClockView from "../view/ClockView"
 import ClockController from "./ClockController"
 
+/*
+ClockListController.ts : manages model(ClockListModel) and view(ClockListView) of the list of clocks.
+
+functions:
+addClock: add clock
+removeClock : removes clock from the list (removes it's view, model, controller)
+
+*/
 
 export interface IClockListController{
     model: TimeListModel
@@ -31,27 +39,29 @@ export default class ClockListController implements IClockListController{
 
 
     addClock(timezone: string, format: "AM" | "PM" |"24H"): void {
+
+        //1. add clock to the list (creates a model)
         const clockId: string = `clock-${this.clockCounter++}`
         this.model.add(clockId, this.view.timeZoneSelected, format)
 
+        //2. create a model, a view, and a controller for this clock
         const ClockModel = this.model.getClock(clockId)
         const clockView = new ClockView(clockId)
         const clockController = new ClockController(ClockModel, clockView)
-        this.clockControllers.set(clockId, clockController)
-        this.view.renderClock(clockId,clockView)
+
+        //3. store controller
+        this.clockControllers.set(clockId, clockController) 
+
+        //4. render clock
+        this.view.renderClock(clockId,clockView) 
         
-        clockView.closeOnClick(()=> this.removeClock(clockId))
+        clockView.closeOnClick(()=> this.removeClock(clockId)) // attach event handler to close button
     }
 
     removeClock(id: string): void {
-        console.log("remove from controller"+id)
         this.view.removeClock(id) //remove view
-        this.model.remove(id) // remove clock from list
+        this.model.remove(id) // remove clock from list (model)
         this.clockControllers.delete(id) // remove clock's controller
-    }
-
-    selectTimezone(){
-        
     }
 
 }

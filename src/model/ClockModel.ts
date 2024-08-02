@@ -1,5 +1,19 @@
 import {toZonedTime , format } from "date-fns-tz"
+/*
+ClockModel.ts : model of one clock.
 
+functions : 
+    getCurrentTime() : returns hours, minutes, seconds, timezone of the clock.
+    nextEditMode() : applies next edit mode in the cycle: 'none' | 'hours' | 'minutes'.
+    increaseHours(): increases hours of the clock.
+    increaseMinutes(): increases minutes of the clock.
+    tick(): updates the clock by adding one second.
+    resetTime(): resets time of the clock according to the timezone;
+    nextFormat():  applies next format in the cycle: 'AM' | 'PM' | '24H' : converts 24H<->AM/PM.
+    format24toAMPM: format time from 24H to AM/PM.
+    formatPMto24: format time from PM to 24H.
+
+*/
 export interface IClockModel{
     dateTime: Date 
     editMode: 'none' | 'hours' | 'minutes'
@@ -31,13 +45,13 @@ export default  class ClockModel implements IClockModel{
         this.editMode = editMode
         this.timezone = timezone
         this.format = format
-        this.resetTime() // function called to set time according to it's timezone
+        this.resetTime() // function called to set time according to it's timezone since we are using Date().
     }
 
     getCurrentTime(): {hours: number, minutes:number, seconds: number, timezone: string}{
-        let tz: string = "local"
+        let tz: string = "Europe/Paris"
         switch(this.timezone){
-            case "Europe/Paris": tz = this.dateTime.toString().split(" ")[5]; break;
+            case "Europe/Paris": tz = this.dateTime.toString().split(" ")[5]; break; // getting timezone from Date().
             case "Africa/Lagos": tz = "UTC+01:00"; break;
             case "Asia/Kolkata": tz = "UTC+5:30"; break;
             case "Europe/Athens": tz = "GMT+03:00"; break;

@@ -1,5 +1,15 @@
 import ClockModel from "./ClockModel";
+/*
+ClockListModel.ts : model of the list of clocks (ClockModel).
 
+functions: 
+
+add: adds clock to the list.
+remove: removes clock found by it's id from the list.
+getClock: returns clock found by it's id.
+
+
+*/
 export interface IClockListModel {
     list : Map<string, ClockModel>
     add(id:string, timezone: string, format: "AM"|"PM"|"24H"): void
