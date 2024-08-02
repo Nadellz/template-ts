@@ -15,7 +15,9 @@ removeClock : removes clock from the list (removes it's view, model, controller)
 export interface IClockListController{
     model: TimeListModel
     view: ClockListView
-
+    clockControllers: Map<string, ClockController>
+    clockCounter: number
+    
     addClock(timezone: string, format: "AM" | "PM" |"24H"): void
     removeClock(id: string): void
 }
