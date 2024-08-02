@@ -1,10 +1,11 @@
-import TimeModel from "../model/TimeModel"
-import TimeView from "../view/TimeView"
+
+import ClockModel from "../model/ClockModel"
+import ClockView from "../view/ClockView"
 
 
-export interface ITimeController {
-    model: TimeModel
-    view: TimeView
+export interface IClockController {
+    model: ClockModel
+    view: ClockView
     updateTime(): void
     changeEditMode(): void
     increaseValue(): void
@@ -13,11 +14,11 @@ export interface ITimeController {
     formatClock(): void
 }
 
-export default class TimeController implements ITimeController{
-    model: TimeModel;
-    view: TimeView;
+export default class ClockController implements IClockController{
+    model: ClockModel;
+    view: ClockView;
 
-    constructor(model: TimeModel, view: TimeView){
+    constructor(model: ClockModel, view: ClockView){
         this.model= model
         this.view = view
 

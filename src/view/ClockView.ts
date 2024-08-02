@@ -1,5 +1,5 @@
 
-export interface ITimeView{
+export interface IClockView{
     clockElement: HTMLElement
     timeElement: HTMLElement
     hoursElement: HTMLElement
@@ -28,7 +28,7 @@ export interface ITimeView{
     pad(num: Number): string
     
 }
-export default class TimeView implements ITimeView{
+export default class ClockView implements IClockView{
     clockElement: HTMLElement
     timeElement: HTMLElement
     hoursElement: HTMLElement

@@ -1,6 +1,6 @@
 import {toZonedTime , format } from "date-fns-tz"
 
-export interface Timing{
+export interface IClockModel{
     dateTime: Date 
     editMode: 'none' | 'hours' | 'minutes'
     timezone: string
@@ -15,7 +15,7 @@ export interface Timing{
     
 }
 
-export default  class TimeModel implements Timing{
+export default  class ClockModel implements IClockModel{
     dateTime: Date
     editMode: 'none' | 'hours' | 'minutes'
     timezone: string

@@ -1,19 +1,13 @@
+import ClockListController from "./controller/ClockListController";
 import "./index.css"
-/*import TimeController from "./controller/TimeController"
-import TimeModel from "./model/TimeModel"
-import TimeView from "./view/TimeView"*/
 
-import TimeListController from "./controller/TimeListController"
-import TimeListModel from "./model/TimeListModel"
-import TimeListView from "./view/TimeListView"
+import TimeListModel from "./model/ClockListModel"
+import ClockListView from "./view/ClockListView"
 
 
 document.addEventListener("DOMContentLoaded", () =>{
-  /*const model = new TimeModel(new Date(),"none","Europe/Paris","24H");
-  const view = new TimeView();
-  new TimeController(model, view)*/
 
   const model = new TimeListModel();
-  const view = new TimeListView();
-  new TimeListController(model, view)
+  const view = new ClockListView();
+  new ClockListController(model, view)
 })

@@ -1,26 +1,26 @@
-import TimeListModel from "../model/TimeListModel"
-import TimeListView from "../view/TimeListView"
-import TimeView from "../view/TimeView"
-import TimeController from "./TimeController"
+import TimeListModel from "../model/ClockListModel"
+import ClockListView from "../view/ClockListView"
+import ClockView from "../view/ClockView"
+import ClockController from "./ClockController"
 
 
-export interface ITimeListController{
+export interface IClockListController{
     model: TimeListModel
-    view: TimeListView
+    view: ClockListView
 
     addClock(timezone: string, format: "AM" | "PM" |"24H"): void
     removeClock(id: string): void
 }
 
-export default class TimeListController implements ITimeListController{
+export default class ClockListController implements IClockListController{
 
     model: TimeListModel
-    view: TimeListView
+    view: ClockListView
 
-    clockControllers: Map<string, TimeController> = new Map()
+    clockControllers: Map<string, ClockController> = new Map()
     clockCounter: number = 0
 
-    constructor(model: TimeListModel, view: TimeListView){
+    constructor(model: TimeListModel, view: ClockListView){
         this.model = model
         this.view = view
 
@@ -34,9 +34,9 @@ export default class TimeListController implements ITimeListController{
         const clockId: string = `clock-${this.clockCounter++}`
         this.model.add(clockId, this.view.timeZoneSelected, format)
 
-        const timeModel = this.model.getClock(clockId)
-        const clockView = new TimeView(clockId)
-        const clockController = new TimeController(timeModel, clockView)
+        const ClockModel = this.model.getClock(clockId)
+        const clockView = new ClockView(clockId)
+        const clockController = new ClockController(ClockModel, clockView)
         this.clockControllers.set(clockId, clockController)
         this.view.renderClock(clockId,clockView)
         

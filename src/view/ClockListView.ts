@@ -1,7 +1,7 @@
-import TimeView from "./TimeView";
+import ClockView from "./ClockView";
 
 
-export interface ITimeListView {
+export interface IClockListView {
     container: HTMLElement
     addButton: HTMLElement
 
@@ -11,12 +11,12 @@ export interface ITimeListView {
     addOnClick(handler: () => void):void
     removeOnClick(handler: (id:string)=> void):void
     timezoneOnChange(handler:(timezone: string)=> void): void
-    renderClock(id: string, clockView: TimeView): void
+    renderClock(id: string, clockView: ClockView): void
     removeClock(id: string): void
 
 }
 
-export default class TimeListView implements TimeListView{
+export default class ClockListView implements IClockListView{
     container: HTMLElement
     addButton: HTMLElement
     selectTimezone: HTMLSelectElement
@@ -66,7 +66,11 @@ export default class TimeListView implements TimeListView{
         this.selectTimezone.appendChild(option4)
 
         //4. append container, addButton and select
+        const title = document.createElement("h1")
+        title.innerHTML="Watch project"
+        title.className="project-title"
 
+        document.getElementById("app")?.append(title)
         document.getElementById("app")?.append(addContainer)
         document.getElementById("app")?.append(this.container)
        
@@ -100,7 +104,7 @@ export default class TimeListView implements TimeListView{
         })
     }
 
-    renderClock(id: string, clockView: TimeView): void{
+    renderClock(id: string, clockView: ClockView): void{
         //append clock to container
         this.container.appendChild(clockView.clockContainer)
     }
