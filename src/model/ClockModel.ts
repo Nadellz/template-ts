@@ -9,7 +9,7 @@ functions :
     increaseMinutes(): increases minutes of the clock.
     tick(): updates the clock by adding one second.
     resetTime(): resets time of the clock according to the timezone;
-    nextFormat():  applies next format in the cycle: 'AM' | 'PM' | '24H' : converts 24H<->AM/PM.
+    nextFormat():  applies next format : 'AM/PM' or '24H' : converts 24H<->AM/PM.
     format24toAMPM: format time from 24H to AM/PM.
     formatPMto24: format time from PM to 24H.
 
@@ -78,13 +78,14 @@ export default  class ClockModel implements IClockModel{
         }else{
             hours = (hours + 1) % 12
             if(hours == 0){ hours = 12}
+            if(hours == 1){ this.format = (this.format == "AM") ? "PM" : "AM"}
         }
         this.dateTime.setHours(hours)
     }
     increaseMinutes(){
         let minutes: number = this.dateTime.getMinutes()
         minutes = (minutes + 1) % 60
-        if(minutes === 0){
+        if(minutes == 0){
 
             if(this.format == "24H"){
                 this.dateTime.setHours((this.dateTime.getHours() + 1) % 24)
@@ -92,6 +93,7 @@ export default  class ClockModel implements IClockModel{
                 let hours: number = this.dateTime.getHours()
                 hours = (hours + 1) % 12
                 if(hours == 0){ hours = 12}
+                if(hours == 1){ this.format = (this.format == "AM") ? "PM" : "AM"}
                 this.dateTime.setHours(hours)
             }
         }
@@ -100,6 +102,14 @@ export default  class ClockModel implements IClockModel{
 
     tick(){
         this.dateTime.setSeconds(this.dateTime.getSeconds() + 1) // updates time even when editing.
+
+        if(this.format == "AM" && (this.dateTime.getHours()!=1) && (this.dateTime.getHours() % 12 == 1)){
+            this.dateTime.setHours(1)
+            this.format ="PM"
+        }else if(this.format == "PM" && (this.dateTime.getHours()!=1) && (this.dateTime.getHours() % 12 == 1)){
+            this.dateTime.setHours(1)
+            this.format ="AM"
+        }
     }
 
     resetTime(): void {
@@ -117,6 +127,7 @@ export default  class ClockModel implements IClockModel{
 
     format24toAMPM(): void{
         let hours: number = this.dateTime.getHours()
+        console.log(this.dateTime)
         if(hours == 0){
             hours = 12 
             // 24H -> PM
@@ -125,7 +136,7 @@ export default  class ClockModel implements IClockModel{
             hours = hours - 12
             // 24H -> PM
             this.format = "PM"
-        }else{
+        }else if( hours <= 12){
             // 24H -> AM
             this.format = "AM"
         }
@@ -133,32 +144,31 @@ export default  class ClockModel implements IClockModel{
     }
     
     formatPMto24(): void{
-        //PM -> 24H
+        //AM/PM -> 24H  
         let hours: number = this.dateTime.getHours()
-        hours = hours + 12
+
+        if(hours < 12 && this.format == "PM"){    
+            hours = hours + 12 
+        }else if (hours == 12 && this.format == "PM"){
+            hours = 0
+        }
+
+        this.format = "24H"
         this.dateTime.setHours(hours)
     }
 
     nextFormat(): void {
-
-        if (this.format == "AM") 
-            {   
-                this.format = "PM"  
-                //no need for conversion : AM to 24H
-            }
-        else if (this.format == "PM") {
-            this.format = "24H"
+        if (this.format == "PM" || this.format == "AM") {
             //change format PM to 24H
             this.formatPMto24()
         }
         else if (this.format == "24H") {
-            this.format = "AM"
             // change format 24H to AM/PM
             this.format24toAMPM()
 
         }
-
     }
+  
 
    
 

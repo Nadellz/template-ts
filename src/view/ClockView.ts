@@ -67,6 +67,13 @@ export default class ClockView implements IClockView{
         this.clockContainer = document.createElement("div")
         this.clockContainer.className = "clock-container"
         this.clockContainer.id = `${clockId}`
+        this.clockContainer.draggable = true
+
+        // add drag and drop listeners
+        this.clockContainer.addEventListener("dragstart",this.onDragStart.bind(this))
+        this.clockContainer.addEventListener("dragover",this.onDragOver.bind(this))
+        this.clockContainer.addEventListener("drop",this.onDrop.bind(this))
+   
 
         //1. create clock-element
         this.clockElement = document.createElement("div")
@@ -249,4 +256,38 @@ export default class ClockView implements IClockView{
     closeOnClick(handler: ()=> void): void{
         this.closeButton.addEventListener('click', handler)
     }
+
+    onDragStart(event: DragEvent): void{
+        event.dataTransfer?.setData("text/plain",this.clockContainer.id)
+    }
+
+    onDragOver(event: DragEvent): void{
+        event.preventDefault()
+    }
+
+    onDrop(event: DragEvent): void{
+        event.preventDefault()
+
+        // Get draged element's id :
+        const targetId: string = event.dataTransfer?.getData("text/plain")
+        const targetElement: Node | null = document.getElementById(targetId)
+
+        // check if the element exists and that is different from the actual element we're dragging into
+        if(targetElement && (targetElement !== this.clockContainer)){
+
+            //1. get clocks container and next sibiling of this clock
+            const parent: Node | null = this.clockContainer.parentElement
+            const nextSibiling: Node | null = this.clockContainer.nextElementSibling
+
+            //2. put clock before target element 
+            parent.insertBefore(this.clockContainer, targetElement)
+
+            //3. put target element before this clock's next sibiling
+            parent.insertBefore(targetElement, nextSibiling)
+        }
+    }
+
+ 
+
+
 }

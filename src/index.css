@@ -161,6 +161,7 @@
     border: 1px solid black;
     border-radius: 5% 5% 5% 5%;
     width: 280px;
+    cursor:grab
   }
   
 
@@ -187,3 +188,8 @@
     width: 280px;
     justify-content: space-between;
   }
+
+
+
+
+
